@@ -4,6 +4,7 @@ version = "0.1.0"
 requires-python = ">=3.13"
 dependencies = [
     "fastapi[standard]>=0.115.12",
+    "granian>=2.3.1",
     "hypercorn>=0.17.3",
     "yapf>=0.43.0",
 ]
