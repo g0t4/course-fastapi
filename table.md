@@ -1,6 +1,4 @@
-# FastAPI - sync vs async
-
-
+## FastAPI - Async vs Sync
 
 | Workers |  Async        |   Sync        | Ratio (Async/Sync) |
 |---------|---------------|---------------|--------------------|
