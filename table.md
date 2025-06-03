@@ -1,0 +1,14 @@
+# FastAPI - sync vs async
+
+
+
+Workers | Async | Sync
+1 | 25,750 | 12,374
+2 | 47,911 | 22,455
+4 | 90,966 | 34,680
+
+gunicorn
+  1p1t - 2,392
+  4p1t - 6,290 
+  1p4t - 2,185
+
