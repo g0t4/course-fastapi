@@ -3,5 +3,6 @@ name = "ex-psycopg"
 version = "0.1.0"
 requires-python = ">=3.13"
 dependencies = [
+    "fastapi[standard]>=0.115.12",
     "psycopg2-binary>=2.9.10",
 ]
