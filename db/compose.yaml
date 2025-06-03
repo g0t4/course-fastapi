@@ -4,7 +4,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: fastapi_perf
+      POSTGRES_DB: postgres 
       # set PG variables to simplify connecting to psql when exec'd into a container
       PGUSER: postgres
       PGPASSWORD: postgres
