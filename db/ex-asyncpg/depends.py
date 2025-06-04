@@ -33,7 +33,10 @@ def default():
 async def get_pool(request: Request):
     return request.state.pool
 
-async def get_connection(pool: Annotated[asyncpg.Pool, Depends(get_pool)]):
+# make annotated types (dependencies) reusable
+Pool = Annotated[asyncpg.Pool, Depends(get_pool)]
+
+async def get_connection(pool: Pool):
     # FYI careful w/ print when measuing performance
     # I added it here to observe order of operations
     print(f"start get_connection")
