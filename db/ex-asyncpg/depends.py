@@ -36,14 +36,14 @@ async def get_pool(request: Request) -> asyncpg.Pool:
 # make annotated types (dependencies) reusable
 Pool = Annotated[asyncpg.Pool, Depends(get_pool)]
 
-async def get_connection(pool: Pool):
+async def with_connection(pool: Pool):
     # FYI careful w/ print when measuing performance
     # I added it here to observe order of operations
-    print(f"start get_connection")
+    print(f"start with_connection")
     async with pool.acquire() as connection:
         async with connection.transaction():
             yield connection
-    print(f"finish get_connection")
+    print(f"finish with_connection")
 
 class MessageModel(BaseModel):
     id: uuid.UUID = Field(default_factory=uuid.uuid4)
@@ -57,7 +57,7 @@ class MessageModel(BaseModel):
 async def message(
     # content: Annotated[str, Body], # alternative
     message: MessageModel,
-    connection: Annotated[asyncpg.Connection, Depends(get_connection)],
+    connection: Annotated[asyncpg.Connection, Depends(with_connection)],
 ):
     # print(f"app state: {vars(request.state)}")
 
