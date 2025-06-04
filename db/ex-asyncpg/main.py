@@ -28,7 +28,14 @@ app = FastAPI(lifespan=app_lifespan)
 async def default():
     return "asyncpg example - use /message to test performance"
 
-# curl -i localhost:8000/message?content=foothebar
+
+
+
+
+
+
+
+
 @app.get("/message")
 async def message(content: str, request: Request):
     id = uuid.uuid4()
@@ -45,3 +52,5 @@ async def message(content: str, request: Request):
         "id": id,
         "message": content,
     }
+
+

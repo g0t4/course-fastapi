@@ -37,20 +37,15 @@ async def default():
 async def get_pool(request: Request) -> asyncpg.Pool:
     return request.state.pool
 
-
-
-# make annotated types (dependencies) reusable
 Pool = Annotated[asyncpg.Pool, Depends(get_pool)]
 
+
 async def with_connection(pool: Pool):
-    # FYI careful w/ print when measuing performance
-    # I added it here to observe order of operations
-    print(f"start with_connection")
     async with pool.acquire() as connection:
         async with connection.transaction():
             yield connection
-    print(f"finish with_connection")
 
+Connection = Annotated[asyncpg.Connection, Depends(with_connection)]
 
 
 
@@ -61,20 +56,15 @@ class MessageModel(BaseModel):
 
 
 
-# submit content in body of request:
-# http -v localhost:8000/message content=foothebar
-@app.post("/message")
-async def message(
-    message: MessageModel,
-    connection: Annotated[asyncpg.Connection, Depends(with_connection)],
-):
 
-    print(f"before insert")
+
+
+
+@app.post("/message")
+async def message(message: MessageModel, connection: Connection):
     await connection.execute(
         "INSERT INTO messages (id, content) VALUES ($1, $2) ",
         message.id,
         message.content,
     )
-    print("after insert")
-
     return message
