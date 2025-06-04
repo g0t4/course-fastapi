@@ -31,7 +31,8 @@ app = FastAPI(lifespan=app_lifespan)
 def default():
     return "psycopg2 example - use /message to test performance"
 
-# curl -i localhost:8000/message?content="foo the bar"
+# GET here to contrast with POST later on
+# curl -i localhost:8000/message?content=foothebar
 @app.get("/message")
 async def message(content: str, request: Request):
     id = uuid.uuid4()
