@@ -15,7 +15,7 @@ def recreate_table(pool: ThreadedConnectionPool):
 
 @asynccontextmanager
 async def app_lifespan(app_: FastAPI):
-    # FYI https://www.starlette.io/lifespan/
+    # https://www.starlette.io/lifespan/
     print("lifespan STARTUP")
     pool = ThreadedConnectionPool(minconn=5, maxconn=20, dsn=DATABASE_URL)
     recreate_table(pool)
@@ -37,7 +37,7 @@ def default():
 async def message(content: str, request: Request):
     id = uuid.uuid4()
 
-    # FYI I didn't use context manager approach for connection this time, to show why CM is useful
+    # example of not using context manager for connection, this is why CM is useful
     pool: ThreadedConnectionPool = request.state.pool
     connection = None
     try:
