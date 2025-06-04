@@ -30,11 +30,13 @@ app = FastAPI(lifespan=app_lifespan)
 def default():
     return "asyncpg depends example - use /message to test performance"
 
-async def get_connection(request: Request):
+async def get_pool(request: Request):
+    return request.state.pool
+
+async def get_connection(pool: Annotated[asyncpg.Pool, Depends(get_pool)]):
     # FYI careful w/ print when measuing performance
     # I added it here to observe order of operations
     print(f"start get_connection")
-    pool: asyncpg.Pool = request.state.pool
     async with pool.acquire() as connection:
         async with connection.transaction():
             yield connection
