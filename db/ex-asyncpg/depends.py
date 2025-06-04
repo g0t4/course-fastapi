@@ -30,8 +30,14 @@ app = FastAPI(lifespan=app_lifespan)
 async def default():
     return "asyncpg depends example - use /message to test performance"
 
+
+
+
+
 async def get_pool(request: Request) -> asyncpg.Pool:
     return request.state.pool
+
+
 
 # make annotated types (dependencies) reusable
 Pool = Annotated[asyncpg.Pool, Depends(get_pool)]
@@ -45,9 +51,15 @@ async def with_connection(pool: Pool):
             yield connection
     print(f"finish with_connection")
 
+
+
+
 class MessageModel(BaseModel):
     id: uuid.UUID = Field(default_factory=uuid.uuid4)
     content: str
+
+
+
 
 # submit content in body of request:
 # http -v localhost:8000/message content=foothebar
