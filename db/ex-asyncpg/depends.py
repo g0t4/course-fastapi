@@ -50,16 +50,12 @@ class MessageModel(BaseModel):
     content: str
 
 # submit content in body of request:
-# http localhost:8000/message content=foothebar
 # http -v localhost:8000/message content=foothebar
-#    add -v to see the body the http(ie) command sends
 @app.post("/message")
 async def message(
-    # content: Annotated[str, Body], # alternative
     message: MessageModel,
     connection: Annotated[asyncpg.Connection, Depends(with_connection)],
 ):
-    # print(f"app state: {vars(request.state)}")
 
     print(f"before insert")
     await connection.execute(
