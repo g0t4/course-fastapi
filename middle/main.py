@@ -1,8 +1,16 @@
 from typing import Awaitable, Callable
 from fastapi import FastAPI, HTTPException, Request, Response
 from fastapi.responses import FileResponse, HTMLResponse
+from fastapi.middleware.gzip import GZipMiddleware
 
 app = FastAPI()
+
+
+
+app.add_middleware(GZipMiddleware, minimum_size=5)
+
+
+
 
 @app.middleware("http")
 async def logger(request: Request, next: Callable[[Request], Awaitable[Response]]):
@@ -11,7 +19,6 @@ async def logger(request: Request, next: Callable[[Request], Awaitable[Response]
     print("logger end")
     response.headers["FOO"] = "BAR"
     return response
-
 
 
 
