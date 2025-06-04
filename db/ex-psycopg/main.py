@@ -47,7 +47,7 @@ async def message(content: str, request: Request):
 
         connection.commit()
     finally:
-        if connection is not None:
+        if connection:
             pool.putconn(connection)
 
     return {
