@@ -39,7 +39,7 @@ files = {
 }
 
 @app.get("/")
-async def root():
+async def root(request: Request):
     print("root start")
     html = "<html><body><h1>Welcome to the File Server!</h1>"
     for key in files.keys():
@@ -49,7 +49,7 @@ async def root():
     return HTMLResponse(content=html)
 
 @app.get("/files/{name}")
-async def get_file(name: str):
+async def get_file(name: str, request: Request):
     file = files.get(name)
     if file is None:
         raise HTTPException(status_code=404, detail="File not found")
