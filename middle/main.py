@@ -24,11 +24,14 @@ async def logger(request: Request, next: Callable[[Request], Awaitable[Response]
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
+from slowapi.middleware import SlowAPIMiddleware
 
-limiter = Limiter(key_func=get_remote_address)
+
+limiter = Limiter(key_func=get_remote_address, default_limits=["5/minute"])
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
+app.add_middleware(SlowAPIMiddleware)
 
 
 
@@ -46,7 +49,6 @@ files = {
 }
 
 @app.get("/")
-@limiter.limit("5/3second")
 async def root(request: Request):
     print("root start")
     html = "<html><body><h1>Welcome to the File Server!</h1>"
