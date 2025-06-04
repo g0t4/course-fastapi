@@ -28,7 +28,7 @@ async def app_lifespan(app_: FastAPI):
 app = FastAPI(lifespan=app_lifespan)
 
 @app.get("/")
-def default():
+async def default():
     return "psycopg2 example - use /message to test performance"
 
 # GET here to contrast with POST later on

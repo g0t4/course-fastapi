@@ -25,7 +25,7 @@ async def app_lifespan(app_: FastAPI):
 app = FastAPI(lifespan=app_lifespan)
 
 @app.get("/")
-def default():
+async def default():
     return "asyncpg example - use /message to test performance"
 
 # curl -i localhost:8000/message?content=foothebar

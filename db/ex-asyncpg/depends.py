@@ -27,7 +27,7 @@ async def app_lifespan(app_: FastAPI):
 app = FastAPI(lifespan=app_lifespan)
 
 @app.get("/")
-def default():
+async def default():
     return "asyncpg depends example - use /message to test performance"
 
 async def get_pool(request: Request) -> asyncpg.Pool:
