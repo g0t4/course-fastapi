@@ -9,7 +9,7 @@ async def logger(request: Request, next: Callable[[Request], Awaitable[Response]
     print(f"logger start {request.url}")
     response: Response = await next(request)
     print("logger end")
-    # response.headers["FOO"] = "BAR"
+    response.headers["FOO"] = "BAR"
     return response
 
 
