@@ -1,6 +1,6 @@
 from contextlib import asynccontextmanager
 from typing import Annotated
-from fastapi import Body, Depends, FastAPI, Request
+from fastapi import Depends, FastAPI, Request
 from pydantic import BaseModel, Field
 import asyncpg
 import uuid
