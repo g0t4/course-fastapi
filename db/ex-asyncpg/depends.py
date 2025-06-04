@@ -7,7 +7,7 @@ import uuid
 
 DATABASE_URL = "postgresql://postgres:postgres@localhost/postgres"
 
-async def recreate_table(pool: asyncpg.Pool):
+async def recreate_table(pool: asyncpg.Pool) -> None:
     async with pool.acquire() as connection:
         await connection.execute("""
             DROP TABLE IF EXISTS messages;
@@ -30,7 +30,7 @@ app = FastAPI(lifespan=app_lifespan)
 def default():
     return "asyncpg depends example - use /message to test performance"
 
-async def get_pool(request: Request):
+async def get_pool(request: Request) -> asyncpg.Pool:
     return request.state.pool
 
 # make annotated types (dependencies) reusable
