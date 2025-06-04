@@ -56,10 +56,8 @@ class MessageModel(BaseModel):
 
 
 
-
-
-
-
+# submit content in body of request:
+# http -v localhost:8000/message content=foothebar
 @app.post("/message")
 async def message(message: MessageModel, connection: Connection):
     await connection.execute(
