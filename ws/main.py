@@ -1,6 +1,9 @@
-def main():
-    print("Hello from ws!")
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, WebSocketException
+
+app = FastAPI()
 
 
-if __name__ == "__main__":
-    main()
+
+
+
+
